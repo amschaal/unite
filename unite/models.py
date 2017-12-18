@@ -12,8 +12,8 @@ class ResourceType(models.Model):
 
 """
 Resource contains instances of the above described ResourceTypes, such as a user or group.  Resources have a local unique identifier per type.
-For example, for a "User" resource, the identifier may be "joebloggs".  There may only be 1 "joebloggs" for the "User" ResourceType.
-The "data" field may contain additional local information for that resource.
+For example, for a "User" resources, the identifier may be "joebloggs".  There may only be 1 "joebloggs" for the "User" ResourceType.
+The "data" field may contain additional local information for that resources.
 """
 class Resource(models.Model):
     identifier = models.CharField(max_length=32,default=uuid.uuid4)
@@ -24,8 +24,8 @@ class Resource(models.Model):
 
 """
 Uniter is the glue that unites resources across applications.  Each instance of a Uniter references a local Resource, which has a type.
-That resource is then linked to resources in other applications using a combination of the app_id and external_id (the unique identifier of that resource in the other application).
-The Uniter instance may also contain information about the external resource stored in the data field.  This may need to be updated periodically by querying the external applications API (or vice versa).
+That resources is then linked to resources in other applications using a combination of the app_id and external_id (the unique identifier of that resources in the other application).
+The Uniter instance may also contain information about the external resources stored in the data field.  This may need to be updated periodically by querying the external applications API (or vice versa).
 """
 class Uniter(models.Model):
     resource = models.ForeignKey(Resource)
@@ -34,4 +34,4 @@ class Uniter(models.Model):
     data = JSONField(null=True)
     class Meta:
         abstract = True
-        unique_together = (('resource', 'app_id'),)
+        unique_together = (('resources', 'app_id'),)
