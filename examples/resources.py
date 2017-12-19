@@ -1,8 +1,8 @@
 from applications import ApplicationResource
 from resources.user_resource import UserResource
 
-class BioshareUserResource(ApplicationResource):
-    application_id = 'bioshare'
+class FakeUserResource(ApplicationResource):
+    application_id = 'fake_app'
     resource = UserResource
     def query_options(self,query):
         return [{'id':'one','name':'one','description':'Describe one'},{'id':'two','name':'two','description':'Describe two'}]
