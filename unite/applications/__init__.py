@@ -1,5 +1,3 @@
-from resources import ResourcePlugin
-
 class ApplicationResource(object):
     application_id = None
     resource = None

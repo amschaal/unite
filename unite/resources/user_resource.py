@@ -1,6 +1,5 @@
-from resources import ResourcePlugin
-from email import email
-from resources.forms import ResourceForm
+from unite.resources import ResourcePlugin
+from unite.resources.forms import ResourceForm
 from django import forms
 
 class UserResource(ResourcePlugin):

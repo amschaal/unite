@@ -3,5 +3,3 @@ class ResourcePlugin(object):
     name = 'Example resource type'
     descripti = 'Example description'
     form = None #This is the form that is used to create local Resources of this type
-    def add_app(self,app):
-        pass
