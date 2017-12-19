@@ -2,22 +2,15 @@ from django.db import models
 from django.contrib.postgres.fields.jsonb import JSONField
 import uuid
 
-"""
-ResourceType may be any type of relation you want to maintain across applications.  IE: Group, User, Account, etc.
-"""
-class ResourceType(models.Model):
-    id = models.CharField(max_length=25,primary_key=True)
-    name = models.CharField(max_length=50)
-    description = models.TextField(blank=True)
 
 """
 Resource contains instances of the above described ResourceTypes, such as a user or group.  Resources have a local unique identifier per type.
-For example, for a "User" resources, the identifier may be "joebloggs".  There may only be 1 "joebloggs" for the "User" ResourceType.
+For example, for a "User" resources, the identifier may be "joebloggs".  There may only be 1 "joebloggs" for the "User" type.
 The "data" field may contain additional local information for that resources.
 """
 class Resource(models.Model):
     identifier = models.CharField(max_length=32,default=uuid.uuid4)
-    type = models.ForeignKey(ResourceType)
+    type_id = models.CharField(max_length=30)
     data = JSONField()
     class Meta:
         unique_together = (('type', 'identifier'),)
