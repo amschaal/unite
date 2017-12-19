@@ -1,5 +1,5 @@
-from applications import ApplicationResource
-from resources.user_resource import UserResource
+from unite.applications import ApplicationResource
+from unite.resources.user_resource import UserResource
 
 class FakeUserResource(ApplicationResource):
     application_id = 'fake_app'

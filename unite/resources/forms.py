@@ -4,4 +4,5 @@ from unite.models import Resource
 class ResourceForm(forms.ModelForm):
     class Meta:
         model = Resource
-        fields = ('identifier',)
+        fields = '__all__'
+        exclude = ('type_id','data')

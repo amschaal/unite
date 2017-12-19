@@ -13,7 +13,7 @@ class Resource(models.Model):
     type_id = models.CharField(max_length=30)
     data = JSONField()
     class Meta:
-        unique_together = (('type', 'identifier'),)
+        unique_together = (('type_id', 'identifier'),)
 
 """
 Uniter is the glue that unites resources across applications.  Each instance of a Uniter references a local Resource, which has a type.
