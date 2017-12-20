@@ -7,7 +7,56 @@
 </table>
 <table>
 {% for ar in resource_type.get_application_resources %}
-<tr><th title="{{ar.application.description}}">{{ar.application.name}}</th><td><input /></td></tr>
+<tr>
+<th title="{{ar.application.description}}">{{ar.application.name}}</th>
+<td>
+	<input id="{{ar.application.id}}-suggest"/>
+	<input type="hidden" id="{{ar.application.id}}">
+	<p id="{{ar.application.id}}-description"></p>
+</td>
+</tr>
 {% endfor %}
 </table>
+
+
+<script>
+
+{% for ar in resource_type.get_application_resources %}
+$( "#{{ar.application.id}}-suggest" ).autocomplete({
+    minLength: 1,
+    source: function (request, response) {
+        // request.term is the term searched for.
+        // response is the callback function you must call to update the autocomplete's 
+        // suggestion list.
+        $.ajax({
+            url: "{% url 'query' type_id=ar.resource.type_id identifier=resource.identifier app_id=ar.application.id %}",
+            data: { query: request.term },
+            dataType: "json",
+            success: response,
+            error: function () {
+                response([]);
+            }
+        });
+    },
+    focus: function( event, ui ) {
+      $( "#{{ar.application.id}}" ).val( ui.item.label );
+      return false;
+    },
+    select: function( event, ui ) {
+      $( "#{{ar.application.id}}-suggest" ).val( ui.item.name );
+      $( "#{{ar.application.id}}-suggest" ).attr('title', ui.item.description );
+      $( "#{{ar.application.id}}" ).val( ui.item.value );
+      $( "#{{ar.application.id}}-description" ).html( ui.item.desc );
+      return false;
+    }
+  })
+  .autocomplete( "instance" )._renderItem = function( ul, item ) {
+    return $( "<li>" )
+      .append( "<div>" + item.name + "<br>" + item.description + "</div>" )
+      .appendTo( ul );
+  };
+
+{% endfor %}
+
+</script>
 {% endblock %}
