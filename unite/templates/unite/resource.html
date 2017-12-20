@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block content %}
+{{resource_type.get_application_resources}}
+<table>
+<tr><th>Type</th><td title="{{resource_type.description}}">{{resource_type.name}}</td></tr>
+<tr><th>Identifier</th><td>{{resource.identifier}}</td></tr>
+</table>
+{% endblock %}

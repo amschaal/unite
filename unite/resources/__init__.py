@@ -1,19 +1,18 @@
 from collections import OrderedDict
 from django.conf import settings
 from django.utils.module_loading import import_string
-class Singleton(type):
-    _instances = {}
-    def __call__(cls, *args, **kwargs):
-        if cls not in cls._instances:
-            cls._instances[cls] = super(Singleton, cls).__call__(*args, **kwargs)
-        return cls._instances[cls]
+from unite import Singleton
 
 class BaseResource(object):
     type_id = 'example_id' #override this
     name = 'Example resource type'
     description = 'Example description'
     form = None #This is the form that is used to create local Resources of this type
-#     def get_form(self):
+    _application_resources = OrderedDict()
+    @classmethod
+    def get_application_resources(cls):
+        return cls._application_resources.values()
+
 
 class ResourceTypes(object):
     __metaclass__ = Singleton

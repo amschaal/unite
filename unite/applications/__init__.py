@@ -1,3 +1,7 @@
+from unite import Singleton
+from django.conf import settings
+from collections import OrderedDict
+from django.utils.module_loading import import_string
 class ApplicationResource(object):
     application_id = None
     resource = None

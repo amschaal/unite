@@ -20,5 +20,6 @@ import views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^resources/types/$', views.resource_types, name='types'),
-    url(r'^resources/types/(?P<type_id>\w+)/create/$', views.create_resource, name='create')
+    url(r'^resources/types/(?P<type_id>\w+)/create/$', views.create_resource, name='create'),
+    url(r'^resources/types/(?P<type_id>\w+)/id/(?P<identifier>\w+)/$', views.resource, name='resource'),
 ]
