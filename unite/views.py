@@ -16,7 +16,7 @@ def create_resource(request,type_id):
             resource = Resource.objects.create(identifier=cleaned['identifier'],type_id=type_id,data=cleaned)
             return redirect('resource', type_id=type_id,identifier=resource.identifier)
     return render(request, 'unite/resource_form.html', {'form': form})
-    
+
 def resource(request,type_id,identifier):
     resource_type = ResourceTypes().get(type_id)
     resource = Resource.objects.get(type_id=type_id,identifier=identifier)

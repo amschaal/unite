@@ -4,10 +4,13 @@ from unite.resources.user_resource import UserResource
 class FakeUserResource(ApplicationResource):
     application_id = 'fake_app'
     resource = UserResource
-    def query_options(self,query):
+    @staticmethod
+    def query_options(query):
         return [{'id':'one','name':'one','description':'Describe one'},{'id':'two','name':'two','description':'Describe two'}]
-    def translate_response(self,response):
+    @staticmethod
+    def translate_response(response):
         #do something to response
         return response
-    def get_by_id(self,id):
+    @staticmethod
+    def get_by_id(id):
         return {'id':id,'name':'Example for id '+str(id),'foo':'bar'}

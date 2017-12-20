@@ -5,10 +5,13 @@ from django.utils.module_loading import import_string
 class ApplicationResource(object):
     application_id = None
     resource = None
-    def query_options(self,query):
+    @staticmethod
+    def query_options(query):
         raise NotImplementedError
-    def translate_response(self,response):
+    @staticmethod
+    def translate_response(response):
         return response
-    def get_by_id(self,id): #This should query remote API to get external representation
+    @staticmethod
+    def get_by_id(id): #This should query remote API to get external representation
         raise NotImplementedError
 
