@@ -10,7 +10,7 @@ class UniteConfig(AppConfig):
         RT = ResourceTypes()
         for ar in getattr(settings,'APPLICATION_RESOURCES',[]):
             application_resource = import_string(ar)
-            application_resource.resource._application_resources[application_resource.application_id] = application_resource
+            application_resource.resource._application_resources[application_resource.application.id] = application_resource
             print application_resource
 #             @staticmethod
 #     def get_application_resources(self):

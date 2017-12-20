@@ -15,6 +15,8 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
+from django.conf import settings
+from django.conf.urls.static import static
 import views
 
 urlpatterns = [
@@ -23,4 +25,4 @@ urlpatterns = [
     url(r'^resources/types/(?P<type_id>\w+)/create/$', views.create_resource, name='create'),
     url(r'^resources/types/(?P<type_id>\w+)/id/(?P<identifier>\w+)/$', views.resource, name='resource'),
     url(r'^api/',include('unite.api.urls')),
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

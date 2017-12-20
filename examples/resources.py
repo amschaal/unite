@@ -1,8 +1,13 @@
-from unite.applications import ApplicationResource
+from unite.applications import ApplicationResource, Application
 from unite.resources.user_resource import UserResource
 
+class FakeApplication(Application):
+    id = 'fake_app'
+    name = 'Fake App'
+    description = 'Just an example app'
+
 class FakeUserResource(ApplicationResource):
-    application_id = 'fake_app'
+    application = FakeApplication
     resource = UserResource
     @staticmethod
     def query_options(query):

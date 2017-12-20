@@ -5,4 +5,9 @@
 <tr><th>Type</th><td title="{{resource_type.description}}">{{resource_type.name}}</td></tr>
 <tr><th>Identifier</th><td>{{resource.identifier}}</td></tr>
 </table>
+<table>
+{% for ar in resource_type.get_application_resources %}
+<tr><th title="{{ar.application.description}}">{{ar.application.name}}</th><td><input /></td></tr>
+{% endfor %}
+</table>
 {% endblock %}
