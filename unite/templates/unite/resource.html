@@ -11,13 +11,13 @@
 <th title="{{ar.application.description}}">{{ar.application.name}}</th>
 <td>
 	<input id="{{ar.application.id}}-suggest"/>
-	<input type="hidden" id="{{ar.application.id}}">
-	<p id="{{ar.application.id}}-description"></p>
 </td>
 </tr>
 {% endfor %}
 </table>
-
+{% for ar in resource.application_resources.all %}
+	{{ar.get_translated_resource}}
+{% endfor %}
 
 <script>
 
@@ -43,20 +43,33 @@ $( "#{{ar.application.id}}-suggest" ).autocomplete({
       return false;
     },
     select: function( event, ui ) {
-      $( "#{{ar.application.id}}-suggest" ).val( ui.item.name );
-      $( "#{{ar.application.id}}-suggest" ).attr('title', ui.item.description );
-      $( "#{{ar.application.id}}" ).val( ui.item.value );
-      $( "#{{ar.application.id}}-description" ).html( ui.item.desc );
+    	$.ajax({
+            url: "{% url 'set_app_resource' type_id=ar.resource.type_id identifier=resource.identifier app_id=ar.application.id %}",
+            data: { id: ui.item.id },
+            dataType: "json",
+            method: 'POST',
+            success: function(response){
+            	console.log('success',response);
+                $( "#{{ar.application.id}}-suggest" ).val( response.translated.label );
+                $( "#{{ar.application.id}}-suggest" ).attr('title', response.translated.description );
+            },
+            error: function (response) {
+            	console.log('error',response);
+            }
+        });
       return false;
     }
   })
   .autocomplete( "instance" )._renderItem = function( ul, item ) {
     return $( "<li>" )
-      .append( "<div>" + item.name + "<br>" + item.description + "</div>" )
+      .append( "<div>" + item.label + "<br>" + item.description + "</div>" )
       .appendTo( ul );
   };
 
 {% endfor %}
-
+{% for ar in resource.application_resources.all %}
+$( "#{{ar.app_id}}-suggest" ).val( '{{ar.get_translated_resource.label}}' );
+$( "#{{ar.app_id}}-suggest" ).attr('title', '{{ar.get_translated_resource.description}}' );
+{% endfor %}
 </script>
 {% endblock %}

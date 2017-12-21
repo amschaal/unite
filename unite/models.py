@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.postgres.fields.jsonb import JSONField
 import uuid
+from unite.resources import ResourceTypes
 
 
 """
@@ -14,17 +15,25 @@ class Resource(models.Model):
     data = JSONField()
     class Meta:
         unique_together = (('type_id', 'identifier'),)
-
-
+    def get_resource_class(self):
+        return ResourceTypes().get(self.type_id)
+    @property
+    def label(self):
+        return self.get_resource_class().get_label(self)
 """
-Uniter is the glue that unites resources across applications.  Each instance of a Uniter references a local Resource, which has a type.
+ApplicationResource is the glue that unites resources across applications.  Each instance of a ApplicationResource references a local Resource, which has a type.
 That resources is then linked to resources in other applications using a combination of the app_id and external_id (the unique identifier of that resources in the other application).
-The Uniter instance may also contain information about the external resources stored in the data field.  This may need to be updated periodically by querying the external applications API (or vice versa).
+The ApplicationResource instance may also contain information about the external resources stored in the data field.  This may need to be updated periodically by querying the external applications API (or vice versa).
 """
 class ApplicationResource(models.Model):
-    resource = models.ForeignKey(Resource)
+    resource = models.ForeignKey(Resource,related_name='application_resources')
     app_id = models.CharField(max_length=50)
     external_id = models.CharField(max_length=100)
     data = JSONField(null=True)
     class Meta:
         unique_together = (('resource', 'app_id'),)
+    def get_app_resource_class(self):
+        resource_type = self.resource.get_resource_class()
+        return resource_type.get_application_resource(self.app_id)
+    def get_translated_resource(self):
+        return self.get_app_resource_class().translate_resource(self.data)

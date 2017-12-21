@@ -23,6 +23,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^resources/types/$', views.resource_types, name='types'),
     url(r'^resources/types/(?P<type_id>\w+)/create/$', views.create_resource, name='create'),
+    url(r'^resources/types/(?P<type_id>\w+)/$', views.resources, name='resources'),
     url(r'^resources/types/(?P<type_id>\w+)/id/(?P<identifier>\w+)/$', views.resource, name='resource'),
     url(r'^api/',include('unite.api.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

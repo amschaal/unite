@@ -2,7 +2,7 @@
 {% block content %}
 <ul>
 {% for rt in resource_types %}
-<li title="{{rt.description}}"><a href="{% url 'create' type_id=rt.type_id%}">{{rt.name}}</a></li>
+<li title="{{rt.description}}"><a href="{% url 'resources' type_id=rt.type_id%}">{{rt.name}}</a></li>
 {% endfor %}
 </ul>
 {% endblock %}

@@ -15,6 +15,9 @@ class BaseResource(object):
     @classmethod
     def get_application_resource(cls,app_id):
         return cls._application_resources.get(app_id,None)
+    @staticmethod
+    def get_label(instance):
+        return instance.identifier
 
 class ResourceTypes(object):
     __metaclass__ = Singleton

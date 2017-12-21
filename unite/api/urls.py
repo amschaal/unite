@@ -18,4 +18,5 @@ import views
 
 urlpatterns = [
     url(r'^resources/types/(?P<type_id>\w+)/id/(?P<identifier>\w+)/app/(?P<app_id>\w+)/query/$', views.get_app_resources, name='query'),
+    url(r'^resources/types/(?P<type_id>\w+)/id/(?P<identifier>\w+)/app/(?P<app_id>\w+)/set/$', views.set_app_resource, name='set_app_resource'),
 ]

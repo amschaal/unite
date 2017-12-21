@@ -114,6 +114,6 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR,'STATIC')
 
 RESOURCES = ['unite.resources.user_resource.UserResource']
-APPLICATION_RESOURCES = ['examples.resources.FakeUserResource']
+APPLICATION_RESOURCES = ['examples.resources.FakeUserResource','examples.resources.FakeUserResource2']
 
 from config import *

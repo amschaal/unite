@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+<h3>{{resource_type.name}}</h3>
+<a href="{% url 'create' type_id=resource_type.type_id%}">Create</a>
+<ul>
+{% for r in resources %}
+<li title="{{r.description}}"><a href="{% url 'resource' type_id=r.type_id identifier=r.identifier %}">{{r.label}}</a></li>
+{% endfor %}
+</ul>
+{% endblock %}

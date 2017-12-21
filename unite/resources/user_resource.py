@@ -15,4 +15,7 @@ class UserResource(BaseResource):
     name = 'User'
     description = 'Manage users across applications'
     form = UserResourceForm
+    @staticmethod
+    def get_label(instance):
+        return '(%s) %s, %s'%(instance.data.get('username',''),instance.data.get('last',''),instance.data.get('first'))
 
