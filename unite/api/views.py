@@ -3,7 +3,9 @@ from rest_framework.response import Response
 from unite.models import Resource, ApplicationResource
 from unite.resources import ResourceTypes
 from rest_framework.exceptions import APIException
-from unite.api.serializers import ApplicationResourceSerializer
+from unite.api.serializers import ApplicationResourceSerializer,\
+    ResourceSerializer
+from rest_framework import viewsets
 
 @api_view()
 def get_app_resources(request,type_id,identifier,app_id):
@@ -33,3 +35,11 @@ def set_app_resource(request,type_id,identifier,app_id):
         return Response({'resource':ApplicationResourceSerializer(instance).data,'translated':application_resource.translate_resource(obj)})
     else:
         raise APIException('No application resource with those parameters was found')
+
+class ResourceViewSet(viewsets.ModelViewSet):
+    serializer_class = ResourceSerializer
+#     permission_classes = [IsAuthenticated,AdminOrReadOnlyPermission]
+    filter_fields = {'type_id':['exact'],'identifier':['exact', 'icontains']}
+    ordering_fields = ('type_id', 'identifier')
+    model = Resource
+    queryset = Resource.objects.all()

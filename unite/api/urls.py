@@ -15,8 +15,11 @@ Including another URLconf
 """
 from django.conf.urls import url
 import views
+from rest_framework import routers
+router = routers.SimpleRouter()
+router.register(r'resources', views.ResourceViewSet)
 
 urlpatterns = [
     url(r'^resources/types/(?P<type_id>\w+)/id/(?P<identifier>\w+)/app/(?P<app_id>\w+)/query/$', views.get_app_resources, name='query'),
     url(r'^resources/types/(?P<type_id>\w+)/id/(?P<identifier>\w+)/app/(?P<app_id>\w+)/set/$', views.set_app_resource, name='set_app_resource'),
-]
+] + router.urls
