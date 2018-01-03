@@ -39,7 +39,8 @@ def set_app_resource(request,type_id,identifier,app_id):
 class ResourceViewSet(viewsets.ModelViewSet):
     serializer_class = ResourceSerializer
 #     permission_classes = [IsAuthenticated,AdminOrReadOnlyPermission]
-    filter_fields = {'type_id':['exact'],'identifier':['exact', 'icontains']}
+    #Need to make app_id and external_id filters match for the same ApplicationResource.  It is possible that there are multiple ApplicationResources for a Resource each of which satisfy one but not both.
+    filter_fields = {'type_id':['exact'],'identifier':['exact', 'icontains'],'application_resources__app_id':['exact'],'application_resources__external_id':['exact']}#,'data':'__all__'
     ordering_fields = ('type_id', 'identifier')
     model = Resource
     queryset = Resource.objects.all()
