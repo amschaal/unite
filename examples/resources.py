@@ -1,5 +1,6 @@
 from unite.applications import BaseApplicationResource, Application
 from unite.resources.user_resource import UserResource
+from unite.resources.group_resource import GroupResource
 
 class FakeApplication(Application):
     id = 'fake_app'
@@ -34,3 +35,24 @@ class FakeUserResource(BaseApplicationResource):
     
 class FakeUserResource2(FakeUserResource):
     application = FakeApplication2
+
+groups = [{'id':id,'name':'Group %d'%id,'description':'Describe %d'%id} for id in range(1,10)]
+
+class FakeGroupResource(BaseApplicationResource):
+    application = FakeApplication
+    resource = GroupResource
+    @staticmethod
+    def query_resources(query):
+        return data
+    @staticmethod
+    def get_by_id(id):
+        return {'id':id,'name':'Name %s'%str(id),'description':'Describe %s'%str(id)}
+    @staticmethod
+    def get_id(obj):
+        return obj.get('id')
+    @staticmethod
+    def get_label(obj):
+        return obj.get('name')
+    @staticmethod
+    def get_description(obj):
+        return obj.get('description')
